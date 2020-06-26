@@ -65,6 +65,7 @@
       <DependentUpon>CameraCapture.cs</DependentUpon>
     </Compile>
     <Compile Include="APICaller.cs" />
+    <Compile Include="EmotionRecognitionApi.cs" />
     <Compile Include="Source.cs" />
   </ItemGroup>
   <ItemGroup>

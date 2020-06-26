@@ -19,9 +19,11 @@ namespace Robotics
         Mat capImage { get; set; }
         Mat liveImage { get; set; }
         VideoCapture cap;
+        EmotionRecognitionApi api;
 
-        public CameraCapture()
+        public CameraCapture(EmotionRecognitionApi api)
         {
+            this.api = api;
             InitializeComponent();
             cap = new VideoCapture();
 
@@ -56,6 +58,8 @@ namespace Robotics
         {
             TakePic();
             CapImage.Image = capImage;
+
+            string result = api.applyRecognition(capImage);
         }
     }
 }

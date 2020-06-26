@@ -20,7 +20,7 @@ namespace Robotics
             var response = algorithm.pipeJson<object>(binaryImageURI);
             JSONresult =  response.result.ToString();
             Console.WriteLine(response.result);
-            System.IO.File.WriteAllText(@"D:\path.txt", JSONresult);
+            System.IO.File.WriteAllText("path.txt", JSONresult);
         }
     }
 }

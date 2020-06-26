@@ -18,7 +18,8 @@ namespace Robotics
 
         public static void Main(string[] args)
         {
-            CameraCapture cam = new CameraCapture();
+            EmotionRecognitionApi api = new EmotionRecognitionApi();
+            CameraCapture cam = new CameraCapture(api);
             cam.ShowDialog();
             //cam.TakePic();
             
