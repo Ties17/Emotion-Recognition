@@ -3,6 +3,7 @@ using Emgu.CV;
 using Emgu.CV.Util;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -48,6 +49,40 @@ namespace Robotics
             var response = algorithm.pipeJson<object>(enc);
             string JSONresult = response.result.ToString();
             return JSONresult;
+        }
+
+        public string characterMapping(ListDictionary listDictionary)
+        {
+            Random random = new Random();
+            string[] characters = { "Toad", "Camila", "Slime Mold", "Nano bots", "Coral crabs", "Salamander" };
+            switch (listDictionary[0].ToString())
+            {
+                case "Disgust":
+                    return characters[0];
+                case "Happy":
+                    if (listDictionary[1].ToString() == "Surprised")
+                    {
+                        return characters[1];
+                    }
+                    else if (listDictionary[1].ToString() == "Fears")
+                    {
+                        return characters[5];
+                    }
+                    return characters[random.Next(6)];
+                case "Surprised":
+                    return characters[2];
+                case "Neutral":
+                    if (listDictionary[1].ToString() == "Surprised")
+                    {
+                        return characters[3];
+                    }
+                    else if (listDictionary[1].ToString() == "Happy")
+                    {
+                        return characters[4];
+                    }
+                    return characters[random.Next(6)];
+            }
+            return characters[random.Next(6)];
         }
 
 
