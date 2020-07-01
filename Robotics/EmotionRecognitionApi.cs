@@ -2,6 +2,7 @@
 using Emgu.CV;
 using Emgu.CV.Util;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
@@ -55,16 +56,17 @@ namespace Robotics
         {
             Random random = new Random();
             string[] characters = { "Toad", "Camila", "Slime Mold", "Nano bots", "Coral crabs", "Salamander" };
-            switch (listDictionary[0].ToString())
+            DictionaryEntry[] myArr = new DictionaryEntry[listDictionary.Count];
+            switch (myArr[0].Value.ToString())
             {
                 case "Disgust":
                     return characters[0];
                 case "Happy":
-                    if (listDictionary[1].ToString() == "Surprised")
+                    if (myArr[1].Value.ToString() == "Surprised")
                     {
                         return characters[1];
                     }
-                    else if (listDictionary[1].ToString() == "Fears")
+                    else if (myArr[1].Value.ToString() == "Fears")
                     {
                         return characters[5];
                     }
@@ -72,11 +74,11 @@ namespace Robotics
                 case "Surprised":
                     return characters[2];
                 case "Neutral":
-                    if (listDictionary[1].ToString() == "Surprised")
+                    if (myArr[1].Value.ToString() == "Surprised")
                     {
                         return characters[3];
                     }
-                    else if (listDictionary[1].ToString() == "Happy")
+                    else if (myArr[1].Value.ToString() == "Happy")
                     {
                         return characters[4];
                     }
