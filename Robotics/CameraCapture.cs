@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -46,6 +47,7 @@ namespace Robotics
             CvInvoke.Resize(capImage, capImage, new Size(480, 360));
 
             LiveImage.Image = capImage;
+            CapImage.Image = capImage;
 
         }
 
@@ -56,10 +58,18 @@ namespace Robotics
 
         private void CapButton_Click(object sender, EventArgs e)
         {
-            TakePic();
-            CapImage.Image = capImage;
-
-            string result = api.applyRecognition(capImage);
+            if(CapButton.Enabled == true)
+            {
+                Console.WriteLine("Click!");
+                CapButton.Enabled = false;
+                TakePic();
+                
+                api.applyRecognition(capImage);
+                
+                CapButton.Enabled = true;
+                Console.WriteLine("-----------------------");
+            }
+            
         }
     }
 }

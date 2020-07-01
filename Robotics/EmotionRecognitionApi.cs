@@ -10,14 +10,16 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
+using System.Threading;
 
 namespace Robotics
 {
     public class EmotionRecognitionApi
     {
         string APIkey = "";
-        Client client;
+        static Client client;
         DataDirectory dir;
+        static Dictionary<string, double> result = new Dictionary<string, double>();
 
         public EmotionRecognitionApi()
         {
@@ -41,35 +43,45 @@ namespace Robotics
 
         }
 
-        public string applyRecognition(Mat image)
+        public void applyRecognition(Mat image)
         {
             CvInvoke.Imwrite("image.jpg", image);
             var dest = dir.file("image.jpg");
             dest.put(File.OpenRead("image.jpg"));
 
+            Thread t = new Thread(recognition);
+            t.Start();
+
+            
+        }
+
+        public static void recognition()
+        {
             ApiReq req = new ApiReq();
             req.image = "data://TiesTienhoven/faces/image.jpg";
             req.numResults = 7;
-            
+
 
             var algorithm = client.algo("deeplearning/EmotionRecognitionCNNMBP/1.0.1");
             algorithm.setOptions(timeout: 300); // optional
             var response = algorithm.pipeJson<object>(JsonConvert.SerializeObject(req));
             string JSONresult = response.result.ToString();
 
-            StringReader reader = new StringReader(JSONresult);
-            JsonTextReader read = new JsonTextReader(reader);
-
             JObject obj = JObject.Parse(JSONresult);
-            string emotie = (string) obj.SelectToken("results[0].emotions[0].label");
-            double conf = (double) obj.SelectToken("results[0].emotions[0].confidence");
-            Console.WriteLine(emotie);
-            Console.WriteLine(conf);
 
+            Dictionary<string, double> emoties = new Dictionary<string, double>();
 
-            return JSONresult;
+            for (int i = 0; i < 7; i++)
+            {
+                string emotie = (string)obj.SelectToken("results[0].emotions[" + i + "].label");
+                double conf = (double)obj.SelectToken("results[0].emotions[" + i + "].confidence");
+                emoties.Add(emotie, conf);
+                Console.WriteLine(emotie);
+                Console.WriteLine(conf);
+            }
+
+            result = emoties;
+
         }
-
-
     }
 }
