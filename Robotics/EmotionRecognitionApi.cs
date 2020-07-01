@@ -23,6 +23,8 @@ namespace Robotics
         DataDirectory dir;
         static Dictionary<string, double> result = new Dictionary<string, double>();
 
+        static MQTTconnector mqtt = new MQTTconnector();
+
         public EmotionRecognitionApi()
         {
             readAPIKey();
@@ -83,23 +85,27 @@ namespace Robotics
 
             result = emoties;
 
+            mqtt.publishToServer(characterMapping());
         }
         
-             public string characterMapping(ListDictionary listDictionary)
+        public static string characterMapping()
         {
             Random random = new Random();
             string[] characters = { "Toad", "Camila", "Slime Mold", "Nano bots", "Coral crabs", "Salamander" };
-            DictionaryEntry[] myArr = new DictionaryEntry[listDictionary.Count];
-            switch (myArr[0].Value.ToString())
+
+            string mainEmotion = result.Keys.ElementAt<string>(0);
+            string secondEmotion = result.Keys.ElementAt<string>(1);
+
+            switch (mainEmotion)
             {
                 case "Disgust":
                     return characters[0];
                 case "Happy":
-                    if (myArr[1].Value.ToString() == "Surprised")
+                    if (secondEmotion == "Surprised")
                     {
                         return characters[1];
                     }
-                    else if (myArr[1].Value.ToString() == "Fear")
+                    else if (secondEmotion == "Fear")
                     {
                         return characters[5];
                     }
@@ -107,11 +113,11 @@ namespace Robotics
                 case "Surprised":
                     return characters[2];
                 case "Neutral":
-                    if (myArr[1].Value.ToString() == "Surprised")
+                    if (secondEmotion == "Surprised")
                     {
                         return characters[3];
                     }
-                    else if (myArr[1].Value.ToString() == "Happy")
+                    else if (secondEmotion == "Happy")
                     {
                         return characters[4];
                     }

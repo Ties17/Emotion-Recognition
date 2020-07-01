@@ -13,12 +13,12 @@ namespace Robotics
         private string password;
         public void publishToServer(string message)
         {
-            MqttClient myClient = new MqttClient("tcp://maxwell.bps-software.nl:1883");
+            MqttClient myClient = new MqttClient("maxwell.bps-software.nl");
             readPassword();
             string clientId = Guid.NewGuid().ToString();
             myClient.Connect(clientId, "androidTI", password);
 
-            myClient.Publish("/ExcellentieTraject/MaskListener", Encoding.UTF8.GetBytes(message));
+            myClient.Publish("ExcellentieTraject/MaskListener", Encoding.UTF8.GetBytes(message));
             System.Console.ReadLine();
         }
 
