@@ -66,7 +66,7 @@ namespace Robotics
                     {
                         return characters[1];
                     }
-                    else if (myArr[1].Value.ToString() == "Fears")
+                    else if (myArr[1].Value.ToString() == "Fear")
                     {
                         return characters[5];
                     }
