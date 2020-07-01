@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Algorithmia;
 using Emgu.CV;
-using Newtonsoft.Json.Linq;
 
 namespace Robotics
 {

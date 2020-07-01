@@ -6,9 +6,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
 
 namespace Robotics
 {
@@ -59,71 +60,13 @@ namespace Robotics
             StringReader reader = new StringReader(JSONresult);
             JsonTextReader read = new JsonTextReader(reader);
 
-            
-            if (JSONresult.Contains("emotions"))
-            {
-                string sub = "";
-                char[] json = JSONresult.ToCharArray();
-                for(int i = 0; i < json.Length; i++)
-                {
-                    if(json[i] == 'e' && json[i + 1] == 'm' && json[i + 2] == 'o' && json[i + 3] == 't')
-                    {
-                         sub = JSONresult.Substring(i);
-                        
-                        break;
-                    }
-                }
+            JObject obj = JObject.Parse(JSONresult);
+            string emotie = (string) obj.SelectToken("results[0].emotions[0].label");
+            double conf = (double) obj.SelectToken("results[0].emotions[0].confidence");
+            Console.WriteLine(emotie);
+            Console.WriteLine(conf);
 
-                int firstIndex = 0;
-                int lastIndex = 0;
 
-                for (int i = 0; i < sub.Length; i++)
-                {
-                    if(sub[i] == '[')
-                    {
-                        firstIndex = i;
-                    }
-                    if(sub[i] == ']' && lastIndex == 0)
-                    {
-                        lastIndex = i;
-                    }
-                }
-
-                sub = sub.Substring(firstIndex, lastIndex);
-
-                string[] split = sub.Split(',');
-                List<string> emotions = new List<string>();
-                for(int i = 0; i < split.Length; i += 2)
-                {
-                    if(!(i == split.Length - 1))
-                    {
-                        emotions.Add(split[i] + split[i + 1]);
-                    }
-                }
-
-                foreach(string s in emotions)
-                {
-                    char[] t = s.ToCharArray();
-                    int confidenceIndex = 0;
-                    int labelIndex = 0;
-                    for(int i = 0; i < t.Length; i++)
-                    {
-                        if (t[i] == 'c' && t[i + 1] == 'o' && t[i + 2] == 'n')
-                        {
-                            confidenceIndex = i;
-                        }
-
-                        
-
-                    }
-                }
-            }
-
-            
-
-            string line = reader.ReadLine();
-
-            
             return JSONresult;
         }
 
