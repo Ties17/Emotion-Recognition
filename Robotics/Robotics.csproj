@@ -48,8 +48,11 @@
     <Reference Include="Emgu.CV.Platform.NetStandard, Version=4.3.0.3890, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <HintPath>..\packages\Emgu.CV.4.3.0.3890\lib\net461\Emgu.CV.Platform.NetStandard.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="M2Mqtt.Net, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\M2Mqtt.4.3.0.0\lib\net45\M2Mqtt.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -67,7 +70,7 @@
     </Compile>
     <Compile Include="APICaller.cs" />
     <Compile Include="EmotionRecognitionApi.cs" />
-    <Compile Include="EmotionsResponse.cs" />
+    <Compile Include="MQTTconnector.cs" />
     <Compile Include="Source.cs" />
   </ItemGroup>
   <ItemGroup>

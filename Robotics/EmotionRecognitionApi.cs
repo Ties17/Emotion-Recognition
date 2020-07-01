@@ -2,7 +2,9 @@
 using Emgu.CV;
 using Emgu.CV.Util;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -68,7 +70,6 @@ namespace Robotics
             string JSONresult = response.result.ToString();
 
             JObject obj = JObject.Parse(JSONresult);
-
             Dictionary<string, double> emoties = new Dictionary<string, double>();
 
             for (int i = 0; i < 7; i++)
@@ -83,5 +84,41 @@ namespace Robotics
             result = emoties;
 
         }
+        
+             public string characterMapping(ListDictionary listDictionary)
+        {
+            Random random = new Random();
+            string[] characters = { "Toad", "Camila", "Slime Mold", "Nano bots", "Coral crabs", "Salamander" };
+            DictionaryEntry[] myArr = new DictionaryEntry[listDictionary.Count];
+            switch (myArr[0].Value.ToString())
+            {
+                case "Disgust":
+                    return characters[0];
+                case "Happy":
+                    if (myArr[1].Value.ToString() == "Surprised")
+                    {
+                        return characters[1];
+                    }
+                    else if (myArr[1].Value.ToString() == "Fear")
+                    {
+                        return characters[5];
+                    }
+                    return characters[random.Next(6)];
+                case "Surprised":
+                    return characters[2];
+                case "Neutral":
+                    if (myArr[1].Value.ToString() == "Surprised")
+                    {
+                        return characters[3];
+                    }
+                    else if (myArr[1].Value.ToString() == "Happy")
+                    {
+                        return characters[4];
+                    }
+                    return characters[random.Next(6)];
+            }
+            return characters[random.Next(6)];
+        }
+
     }
 }
